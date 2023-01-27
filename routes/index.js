@@ -63,10 +63,7 @@ body("password"),
 )
 
 router.post('/api/todos', validateToken, (req,res, next) => {
-  Todo.findOne({user: req.user._id}, (err, todo) => {
-    console.log("TODO: "+todo)
-    console.log("ID: "+ req.user._id)
-    console.log(req.user.id)
+  Todo.findOne({user: req.user.id}, (err, todo) => {
     if(err) throw err
       if(todo) {
         for (let index = 0; index < todo.items.length; index++) {
