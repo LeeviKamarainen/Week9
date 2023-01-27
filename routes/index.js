@@ -29,7 +29,7 @@ router.get('/api/user/login', (req, res, next) => {
 
 router.post('/api/user/login',
 body("email").trim().escape(),
-body("password").escape(),
+body("password"),
 (req,res) => {
   const user = User.findOne({email: req.body.email}, (err, user) => {
     if(err) throw err;
@@ -105,7 +105,7 @@ router.get('/api/private', validateToken, (req,res,next) => {
 
 router.post("/api/user/register",
   body("email").isLength({min: 3}).trim().escape(),
-  body("password").isStrongPassword().escape(),
+  body("password").isStrongPassword(),
   (req, res, next) => {
     const errors = validationResult(req);
     if(!errors.isEmpty()) {
