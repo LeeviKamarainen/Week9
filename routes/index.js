@@ -69,7 +69,9 @@ router.post('/api/todos', validateToken, (req,res, next) => {
     console.log(req.user.id)
     if(err) throw err
       if(todo) {
-        todo.items.push(req.body.items);
+        for (let index = 0; index < todo.items.length; index++) {
+          todo.items.push(req.body.items[index])
+        }
         todo.user = req.user.id;
         todo.save()
         console.log("Todo: " + todo)
