@@ -63,13 +63,13 @@ body("password"),
 )
 
 router.post('/api/todos', validateToken, (req,res, next) => {
-  console.log(req.user)
-  console.log(req.body)
   Todo.findOne({user: req.user._id}, (err, todo) => {
-    console.log(req.user)
+    console.log(todo)
+    console.log(req.user._id)
     if(err) throw err
       if(todo) {
         todo.items.push(req.body.items);
+        todo.user = req.user._id;
         todo.save()
         console.log("Todo: " + todo)
         return res.json({message: "Todos appended."})
