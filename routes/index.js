@@ -66,6 +66,7 @@ router.post('/api/todos', validateToken, (req,res, next) => {
   console.log(req.user)
   console.log(req.body)
   Todo.findOne({user: req.user.id}, (err, user) => {
+    console.log(req.user)
     if(err) throw err
       if(user) {
         user.items.push(req.body.items);
@@ -75,11 +76,12 @@ router.post('/api/todos', validateToken, (req,res, next) => {
       } else {
         Todo.create(
           {
-            user: req.user.id,
+            user: req.user._id,
             items: req.body.items
           },
           (err, ok) => {
             if(err) throw err;
+            console.log(ok)
             return res.send("Todo added")
           });
       }
