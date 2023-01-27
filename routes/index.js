@@ -63,7 +63,8 @@ body("password"),
 )
 
 router.post('/api/todos', validateToken, (req,res, next) => {
-  todobody = req.body.todo;
+  console.log(req.user)
+  console.log(req.body)
   Todo.findOne({user: req.user._id}, (err, user) => {
     if(err) throw err
       if(user) {
