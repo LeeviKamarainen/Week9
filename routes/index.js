@@ -17,7 +17,7 @@ router.get('/', (req, res, next) => {
 });
 
 
-router.get('/api/user/register', (req, res, next) => {
+router.get('/register.html', (req, res, next) => {
   res.render('register')
 });
 
