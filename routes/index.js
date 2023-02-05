@@ -33,14 +33,11 @@ router.get('/login.html', (req, res, next) => {
 router.post('/api/user/login',
 upload.none(),
 (req,res) => {
-  console.log(req.body)
   const user = User.findOne({email: req.body.email}, (err, user) => {
     if(err) throw err;
     if(!user) {
-      console.log(user)
       return res.status(403).json({message: "Login failed"});
     } else {
-      console.log(user)
       bcrypt.compare(req.body.password, user.password, (err, isMatch) => {
         if(err) throw err;
         if(isMatch) {
@@ -55,7 +52,7 @@ upload.none(),
               expiresIn: 120
             },
             (err, token) => {
-              res.json({success: true, token});
+              res.json({success: true, token, email: user.email});
             }
           );
         }
@@ -70,6 +67,7 @@ router.post('/api/todos', validateToken, (req,res, next) => {
   Todo.findOne({user: req.user.id}, (err, todo) => {
     if(err) throw err
       if(todo) {
+        console.log(req.body)
         for (let index = 0; index < req.body.items.length; index++) {
           todo.items.push(req.body.items[index])
         }

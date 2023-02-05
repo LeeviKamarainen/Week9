@@ -1,6 +1,13 @@
 header
     ul
         li: a(href='/') Home
-        li: a(href='/login.html') Login
-        li: a(href='/register.html') Register
-        li: a(href='/api/user/logout') Logout
+        li: a(href='/login.html' id="login") Login
+        li: a(href='/register.html' id="register") Register
+        li: button#logout Logout
+        li: input(class="text" type="text" id="add-item")
+    div(id="user" class="card-panel")
+
+    ul(id="todolist")
+
+    script(src="/javascripts/hidden.js")
+

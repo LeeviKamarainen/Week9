@@ -20,10 +20,11 @@ function loginUser(event) {
     })
     .then((response) => response.json())
     .then((data) => {
-        console.log(data)
     if(data.token) {
         storeToken(data.token);
+        let user = document.getElementById("user")
         window.location.href="/";
+        user.value = data.email;
     }
     else{
         if(data.message) {
