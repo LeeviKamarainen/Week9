@@ -51,7 +51,7 @@ body("password"),
               expiresIn: 120
             },
             (err, token) => {
-              res.json({success: true, token}).redirect('/');
+              res.redirect('/');
             }
           );
         }
