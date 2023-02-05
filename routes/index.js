@@ -9,6 +9,9 @@ const User = require('../models/Users');
 const Todo = require('../models/Todo');
 const jwt = require("jsonwebtoken");
 const validateToken = require('../auth/validateToken.js');
+const multer = require('multer')
+const storage = multer.memoryStorage();
+const upload = multer({storage})
 
 
 /* GET home page. */
@@ -28,15 +31,16 @@ router.get('/login.html', (req, res, next) => {
 });
 
 router.post('/api/user/login',
-body("email").trim().escape(),
-body("password"),
+upload.none(),
 (req,res) => {
+  console.log(req.body)
   const user = User.findOne({email: req.body.email}, (err, user) => {
     if(err) throw err;
     if(!user) {
       console.log(user)
       return res.status(403).json({message: "Login failed"});
     } else {
+      console.log(user)
       bcrypt.compare(req.body.password, user.password, (err, isMatch) => {
         if(err) throw err;
         if(isMatch) {
@@ -51,7 +55,7 @@ body("password"),
               expiresIn: 120
             },
             (err, token) => {
-              res.redirect('/');
+              res.json({success: true, token});
             }
           );
         }
@@ -137,5 +141,7 @@ router.post("/api/user/register",
         }
       })
 });
+
+
 
 module.exports = router;
