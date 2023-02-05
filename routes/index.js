@@ -22,7 +22,7 @@ router.get('/register.html', (req, res, next) => {
 });
 
 
-router.get('/api/user/login', (req, res, next) => {
+router.get('/login.html', (req, res, next) => {
   res.render('login')
 
 });
@@ -51,7 +51,7 @@ body("password"),
               expiresIn: 120
             },
             (err, token) => {
-              res.json({success: true, token});
+              res.json({success: true, token}).redirect('/');
             }
           );
         }
@@ -130,7 +130,7 @@ router.post("/api/user/register",
               },
               (err, ok) => {
                 if(err) throw err;
-                return res.redirect("/api/user/login");
+                return res.redirect("/login.html");
               });
             })
           })
