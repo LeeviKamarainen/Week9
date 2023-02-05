@@ -63,22 +63,25 @@ body("password"),
 )
 
 router.post('/api/todos', validateToken, (req,res, next) => {
-  todobody = req.body.todo;
-  Todo.findOne({user: req.user._id}, (err, user) => {
+  Todo.findOne({user: req.user.id}, (err, todo) => {
     if(err) throw err
-      if(user) {
-        user.items.push(req.body.items);
-        user.save()
-        console.log(user)
+      if(todo) {
+        for (let index = 0; index < req.body.items.length; index++) {
+          todo.items.push(req.body.items[index])
+        }
+        todo.user = req.user.id;
+        todo.save()
+        console.log("Todo: " + todo)
         return res.json({message: "Todos appended."})
       } else {
         Todo.create(
           {
-            user: req.user._id,
+            user: req.user.id,
             items: req.body.items
           },
           (err, ok) => {
             if(err) throw err;
+            console.log("OK:" +ok)
             return res.send("Todo added")
           });
       }
