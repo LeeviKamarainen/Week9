@@ -87,12 +87,14 @@ function showUser() {
 function hideContent(loginButton,logoutButton, registerButton,userText,addItem,todoList) {
     let menuList = document.getElementById('menu')
     let userData = document.getElementById('userdata')
-
+    console.log(userText.parentNode)
     const authToken = localStorage.getItem("auth_token");
     if(!authToken) {
         logoutButton.parentNode.removeChild(logoutButton)
         userText.parentNode.removeChild(userText)
         addItem.parentNode.removeChild(addItem)
+        userData.appendChild(userText)
+        userData.appendChild(todoList)
         todoList.parentNode.removeChild(todoList)
         userText.parentNode.removeChild(userText)
 
