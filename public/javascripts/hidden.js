@@ -11,13 +11,33 @@ if (document.readyState !== "loading") {
     let loginButton = document.getElementById("login");
     let registerButton = document.getElementById("register");
     let addItem = document.getElementById("add-item");
-    const userText = document.getElementById("user");
-    hideContent(loginButton,logoutButton, registerButton,userText,addItem)
+    let userText = document.getElementById("user");
+    let todoList = document.getElementById('todolist');
+
+    
+
+    hideContent(loginButton,logoutButton, registerButton,userText,addItem,todoList)
     logoutButton.addEventListener("click", logoutUser)
     addItem.addEventListener("keypress",addTodo)
     showUser()
+    showTodos()
 }
 
+function showTodos() {
+    const authToken = localStorage.getItem("auth_token");
+    if(!authToken) return;
+    fetch('/api/todos/list', {
+        method: "GET",
+        headers: {
+            "authorization": "Bearer " + authToken
+        }
+    })
+        .then((response) => response.json())
+        .then((data) => {
+            document.getElementById('todolist').innerHTML = data.items;
+    })
+
+}
 
 async function addTodo(event) {
     const authToken = localStorage.getItem("auth_token");
@@ -64,17 +84,28 @@ function showUser() {
 }
 
 
-function hideContent(loginButton,logoutButton, registerButton,userText,addItem) {
+function hideContent(loginButton,logoutButton, registerButton,userText,addItem,todoList) {
+    let menuList = document.getElementById('menu')
+    let userData = document.getElementById('userdata')
+
     const authToken = localStorage.getItem("auth_token");
     if(!authToken) {
-        logoutButton.hidden = true;
-        userText.hidden = true;
-        addItem.hidden = true;
+        logoutButton.parentNode.removeChild(logoutButton)
+        userText.parentNode.removeChild(userText)
+        addItem.parentNode.removeChild(addItem)
+        todoList.parentNode.removeChild(todoList)
+        userText.parentNode.removeChild(userText)
+
+        menuList.appendChild(loginButton)
+        menuList.appendChild(registerButton)
     } else {
-        loginButton.hidden = true;
-        registerButton.hidden = true;
-        userText.hidden = false;
-        addItem.hidden = false;
+        loginButton.parentNode.removeChild(loginButton)
+        registerButton.parentNode.removeChild(registerButton)
+
+        menuList.appendChild(userText)
+        menuList.appendChild(addItem)
+        userData.appendChild(userText)
+        userData.appendChild(todoList)
     }
 
 }

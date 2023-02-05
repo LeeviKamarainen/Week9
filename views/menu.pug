@@ -1,13 +1,16 @@
-header
-    ul
+header 
+
+    ul(id = "menu")
         li: a(href='/') Home
         li: a(href='/login.html' id="login") Login
         li: a(href='/register.html' id="register") Register
         li: button#logout Logout
         li: input(class="text" type="text" id="add-item")
-    div(id="user" class="card-panel")
+        
 
-    ul(id="todolist")
+    div(id="userdata" class="card-panel")
+        div(id="user")
+        div(id="todolist")
 
     script(src="/javascripts/hidden.js")
 

@@ -9,7 +9,8 @@ const User = require('../models/Users');
 const Todo = require('../models/Todo');
 const jwt = require("jsonwebtoken");
 const validateToken = require('../auth/validateToken.js');
-const multer = require('multer')
+const multer = require('multer');
+const { validate } = require('../models/Users');
 const storage = multer.memoryStorage();
 const upload = multer({storage})
 
@@ -84,16 +85,20 @@ router.post('/api/todos', validateToken, (req,res, next) => {
           (err, ok) => {
             if(err) throw err;
             console.log("OK:" +ok)
-            return res.send("Todo added")
+            return res.json(ok)
           });
       }
   })
 }
 )
 
-router.get('/api/todos/list', (req, res, next) => {
-  res.send(todos)
-
+router.get('/api/todos/list', validateToken, (req, res, next) => {
+  Todo.findOne({user: req.user.id}, (err, todo) => {
+    if(err) throw err
+      if(todo) {
+        res.json(todo)
+      }
+  })
 });
 
 router.get('/api/user/list', (req, res, next) => {

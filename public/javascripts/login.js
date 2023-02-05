@@ -22,9 +22,7 @@ function loginUser(event) {
     .then((data) => {
     if(data.token) {
         storeToken(data.token);
-        let user = document.getElementById("user")
         window.location.href="/";
-        user.value = data.email;
     }
     else{
         if(data.message) {
