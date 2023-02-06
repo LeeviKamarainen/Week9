@@ -140,7 +140,7 @@ router.post("/api/user/register",upload.none(),
               },
               (err, ok) => {
                 if(err) throw err;
-                return res.json({user: ok}).redirect("/login.html");
+                return res.json({user: ok});
               });
             })
           })

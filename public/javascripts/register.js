@@ -31,6 +31,9 @@ function registerUser(event) {
     else if(data.errors) {
      document.getElementById('errormessage').innerHTML = 'Password is not strong enough'; 
     }
+    else {
+    window.location.href="/login.html";
+    }
     })
   
   
