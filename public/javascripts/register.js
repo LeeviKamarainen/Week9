@@ -15,9 +15,10 @@ if (document.readyState !== "loading") {
 
 function registerUser(event) {
     event.preventDefault();
-  
     const formData = new FormData(event.target);
-    fetch("/api/user/login", {
+    console.log(formData)
+    console.log(event.target)
+    fetch("/api/user/register", {
       method: "POST",
       body: formData
   })

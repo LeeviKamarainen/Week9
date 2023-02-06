@@ -113,14 +113,17 @@ router.get('/api/private', validateToken, (req,res,next) => {
   res.json({email: req.user.email});
 })
 
-router.post("/api/user/register",
-  body("email").isLength({min: 8}).trim().escape(),
+router.post("/api/user/register",upload.none(),
+  body("email").isLength({min: 3}),
   body("password").isStrongPassword(),
   (req, res, next) => {
     const errors = validationResult(req);
+    console.log(errors)
+    console.log(req.body)
     if(!errors.isEmpty()) {
+      console.log(JSON.stringify(req.body))
       return res.json({errors: errors.array()})
-    }
+    } else {
     User.findOne({email: req.body.email}, (err, user) => {
       if(err) throw err
       if(user) {
@@ -137,12 +140,13 @@ router.post("/api/user/register",
               },
               (err, ok) => {
                 if(err) throw err;
-                return res.redirect("/login.html");
+                return res.json({user: ok}).redirect("/login.html");
               });
             })
           })
         }
       })
+    }
 });
 
 
