@@ -124,7 +124,7 @@ router.post("/api/user/register",
     User.findOne({email: req.body.email}, (err, user) => {
       if(err) throw err
       if(user) {
-        return res.status(403).json({email: "Username already in use"})
+        return res.status(403).json({message: "Username already in use"})
       } else {
         console.log("Adding new user");
         bcrypt.genSalt(10, (err, salt) => {
