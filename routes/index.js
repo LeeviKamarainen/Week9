@@ -57,6 +57,9 @@ upload.none(),
             }
           );
         }
+        else {
+          res.json({message: "Invalid credentials"})
+        }
       })
     }
 
