@@ -26,7 +26,7 @@ function loginUser(event) {
     }
     else{
         if(data.message) {
-            document.getElementById('error').innerHTML = data.message;
+            document.getElementById('errormessage').innerHTML = 'Invalid credentials';
         } else {
             document.getElementById('error').innerHTML = "Very strange error!";
         }
