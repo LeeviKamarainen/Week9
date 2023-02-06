@@ -9,29 +9,6 @@ if (document.readyState !== "loading") {
 
   function initializeCodeLogin() {
     document.getElementById("login-form").addEventListener("submit", loginUser);
-    document.getElementById("register-form").addEventListener("submit", registerUser);
-}
-
-
-function registerUser(event) {
-  event.preventDefault();
-
-  const formData = new FormData(event.target);
-  fetch("/api/user/login", {
-    method: "POST",
-    body: formData
-})
-.then((response) => response.json())
-.then((data) => {
-if(data.message) {
-  document.getElementById('errormessage').innerHTML = 'Email already in use';
-  }
-  else if(data.errors) {
-   document.getElementById('errormessage').innerHTML = 'Password is not strong enough'; 
-  }
-  })
-
-
 }
 
 
