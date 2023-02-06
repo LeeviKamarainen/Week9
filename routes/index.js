@@ -114,17 +114,17 @@ router.get('/api/private', validateToken, (req,res,next) => {
 })
 
 router.post("/api/user/register",
-  body("email").isLength({min: 3}).trim().escape(),
+  body("email").isLength({min: 8}).trim().escape(),
   body("password").isStrongPassword(),
   (req, res, next) => {
     const errors = validationResult(req);
     if(!errors.isEmpty()) {
-      return res.status(400).json({errors: errors.array()})
+      return res.json({errors: errors.array()})
     }
     User.findOne({email: req.body.email}, (err, user) => {
       if(err) throw err
       if(user) {
-        return res.status(403).json({message: "Username already in use"})
+        return res.json({message: "Username already in use"})
       } else {
         console.log("Adding new user");
         bcrypt.genSalt(10, (err, salt) => {

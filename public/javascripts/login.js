@@ -26,7 +26,7 @@ function registerUser(event) {
 if(data.message) {
   document.getElementById('errormessage').innerHTML = 'Email already in use';
   }
-  else {
+  else if(data.errors) {
    document.getElementById('errormessage').innerHTML = 'Password is not strong enough'; 
   }
   })
@@ -52,7 +52,7 @@ function loginUser(event) {
         if(data.message) {
             document.getElementById('errormessage').innerHTML = 'Invalid credentials';
         } else {
-            document.getElementById('error').innerHTML = "Very strange error!";
+            document.getElementById('errormessage').innerHTML = "Very strange error!";
         }
       }
     })
