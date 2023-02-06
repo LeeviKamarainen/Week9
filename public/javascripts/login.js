@@ -9,6 +9,7 @@ if (document.readyState !== "loading") {
 
   function initializeCodeLogin() {
     document.getElementById("login-form").addEventListener("submit", loginUser);
+    document.getElementById("register-form").addEventListener("submit", registerUser);
 }
 
 
